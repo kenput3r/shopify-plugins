@@ -1,8 +1,21 @@
+const { createProxyMiddleware } = require("http-proxy-middleware")
+
 module.exports = {
+  developMiddleware: app => {
+    app.use(
+      "/.netlify/functions/",
+      createProxyMiddleware({
+        target: "http://localhost:9000",
+        pathRewrite: {
+          "/.netlify/functions/": "",
+        },
+      })
+    )
+  },
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Sale Tools`,
+    description: `Interface with Shopify & Netsuite APIs to prepare products for sales`,
+    author: `@kenput3r`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -28,6 +41,9 @@ module.exports = {
       },
     },
     `gatsby-plugin-gatsby-cloud`,
+    `gatsby-plugin-styled-components`,
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-emotion`
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
